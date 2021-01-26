@@ -57,7 +57,7 @@ class GlobalID(Field):
 
 
 class NodeField(Field):
-    def __init__(self, node, type=False, deprecation_reason=None, name=None, **kwargs):
+    def __init__(self, node, type=False, **kwargs):
         assert issubclass(node, Node), "NodeField can only operate in Nodes"
         self.node_type = node
         self.field_type = type
@@ -66,8 +66,8 @@ class NodeField(Field):
         super(NodeField, self).__init__(
             # If we don't specify a type, the field type will be the node interface
             type or node,
-            description="The ID of the object",
-            id=global_id_type.graphene_type(required=True),
+            id=global_id_type.graphene_type(required=True, description="The ID of the object"),
+            **kwargs
         )
 
     def get_resolver(self, parent_resolver):
